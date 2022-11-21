@@ -1,7 +1,27 @@
-<aura:component >
-	<ol>
+<aura:component>
+    <aura:attribute name="items" type="Camping_Item__c[]" />
+    <aura:attribute name="newItem" type="Camping_Item__c"
+        default="{ 'sobjectType': 'Camping_Item__c', 'Name': '', 'Quantity__c': 0, 'Price__c': 0, 'Packed__c': false}" />
+
+
+
+    <ol>
         <li>Bug Spray</li>
         <li>Bear Repellant</li>
         <li>Goat Food</li>
     </ol>
+
+    <aura:iteration items="{!v.items}" var="item">
+        <c:campingListItem item="{!item}" />
+    </aura:iteration>
+
+    <form class="slds-form_stacked">
+        <lightning:input aura:id="campingitemform" label="Name" value="{!v.newItem.Name}" required="true" />
+        <lightning:input aura:id="campingitemform" label="Quantity" type="number" value="{!v.newItem.Quantity__c}"
+            required="true" min="1" />
+        <lightning:input aura:id="campingitemform" label="Price" type="number" value="{!v.newItem.Price__c}"
+            formatter="currency" />
+        <lightning:input aura:id="campingitemform" label="Packed?" type="checkbox" checked="{!v.newItem.Packed__c}" />
+        <lightning:button variant="brand" label="Create Camping Item" onclick="{!c.clickCreateItem}" />
+    </form>
 </aura:component>
